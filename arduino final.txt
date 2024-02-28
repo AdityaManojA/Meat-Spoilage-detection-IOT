@@ -1,0 +1,62 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+
+const char* ssid = "YourAPSSID";     // SSID of your NodeMCU access point
+const char* password = "YourAPPassword"; // Password for your NodeMCU access point
+
+int gasPin = A0; // Analog pin for gas sensor
+float Ro = 10.0; // Ro is initialized to 10 kilo ohms
+float RL_VALUE = 10.0; // Load resistance on the board, in kilo ohms
+float ammoniaThreshold = 15.0; // Ammonia concentration threshold in ppm
+
+ESP8266WebServer server(80); // Create a web server object listening on port 80
+
+void setup() {
+  Serial.begin(115200);
+  delay(10);
+
+  // Set up the NodeMCU as an access point
+  WiFi.softAP(ssid, password);
+
+  Serial.println();
+  Serial.print("Access Point SSID: ");
+  Serial.println(ssid);
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.softAPIP());
+
+  // Route for root / web page
+  server.on("/", HTTP_GET, handleRoot);
+
+  // Start the server
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+void loop() {
+  server.handleClient(); // Handle client requests
+}
+
+// Handler for the root / web page
+void handleRoot() {
+  // Read analog value from gas sensor
+  int sensorValue = analogRead(gasPin); 
+  // Convert analog value to voltage
+  float sensorVoltage = sensorValue / 1023.0 * 5.0;
+  // Calculate sensor resistance
+  float RS_gas = (5.0 - sensorVoltage) / sensorVoltage * RL_VALUE;
+  // Calculate ratio of RS/Ro
+  float ratio = RS_gas / Ro;
+  // Calculate ammonia concentration using MQ137 gas sensor curve
+  float ammoniaConcentration = pow(10, ((log10(ratio) - 0.2042) / (-0.3268)));
+
+  // Prepare response based on ammonia concentration
+  String response;
+  if (ammoniaConcentration > ammoniaThreshold) {
+    response = "1"; // Ammonia concentration above threshold, send "1"
+  } else {
+    response = "0"; // Ammonia concentration below threshold, send "0"
+  }
+
+  // Send the response
+  server.send(200, "text/plain", response);
+}
