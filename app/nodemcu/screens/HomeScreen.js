@@ -15,7 +15,7 @@ const HomeScreen = ({ value }) => {
           The Provided meat is: {isSpoilt ? 'Spoilt' : 'Not spoilt'}
         </Text>
       </View>
-      <View style={styles.footer}>
+      <View style={styles.header}>
         <Text style={styles.footerText}>Powered by ServeGuard Technologies</Text>
       </View>
     </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   header: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#FFB6C1',
     paddingVertical: 15,
     paddingHorizontal: 20,
     alignItems: 'center',
