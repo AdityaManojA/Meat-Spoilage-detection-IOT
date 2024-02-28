@@ -1,39 +1,31 @@
-// App.js
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import HomeScreen from './screens/HomeScreen';
+import React, { useState } from 'react';
+import { View, Text, Button, Alert } from 'react-native';
 
-const App = () => {
-  const [sensorValue, setSensorValue] = useState(null);
+const TestConnectionScreen = () => {
+  const [connectionStatus, setConnectionStatus] = useState('');
 
-  useEffect(() => {
-    fetchSensorValue();
-  }, []);
-
-  const fetchSensorValue = async () => {
+  const testConnection = async () => {
     try {
-     
-      const response = await fetch('http://your-nodemcu-ip-address/value');
-      const data = await response.json();
-      setSensorValue(data.value);
+      const response = await fetch('http://192.168.1.10/');
+      if (response.ok) {
+        setConnectionStatus('Connection successful');
+        Alert.alert('Success', 'Connection made successfully!');
+      } else {
+        setConnectionStatus('Failed to connect');
+        Alert.alert('Failed', 'Failed to connect to the NodeMCU device.');
+      }
     } catch (error) {
-      console.error('Error fetching sensor value:', error);
+      setConnectionStatus('Failed to connect');
+      Alert.alert('Error', 'An error occurred while attempting to connect.');
     }
   };
-  
 
   return (
-    <View style={styles.container}>
-      <HomeScreen value={sensorValue} />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>{connectionStatus}</Text>
+      <Button title="Test Connection" onPress={testConnection} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFB6C1',
-  },
-});
-
-export default App;
+export default TestConnectionScreen;
