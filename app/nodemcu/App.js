@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.js
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import HomeScreen from './screens/HomeScreen';
 
-export default function App() {
+const App = () => {
+  const [sensorValue, setSensorValue] = useState(null);
+
+  useEffect(() => {
+    fetchSensorValue();
+  }, []);
+
+  const fetchSensorValue = async () => {
+    try {
+      // Replace 'http://your-nodemcu-ip-address/value' with your actual NodeMCU endpoint
+      const response = await fetch('http://your-nodemcu-ip-address/value');
+      const data = await response.json();
+      setSensorValue(data.value);
+    } catch (error) {
+      console.error('Error fetching sensor value:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Niggas in paris</Text>
-      <StatusBar style="auto" />
+      <HomeScreen value={sensorValue} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F8F8F8',
   },
 });
+
+export default App;
