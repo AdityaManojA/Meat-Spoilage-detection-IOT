@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const HomeScreen = ({ value }) => {
-  // Logic to determine spoilt or not spoilt based on the value
+
   const isSpoilt = value === 1;
 
   return (

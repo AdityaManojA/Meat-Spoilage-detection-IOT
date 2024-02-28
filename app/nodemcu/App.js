@@ -12,7 +12,7 @@ const App = () => {
 
   const fetchSensorValue = async () => {
     try {
-      // Replace 'http://your-nodemcu-ip-address/value' with your actual NodeMCU endpoint
+     
       const response = await fetch('http://your-nodemcu-ip-address/value');
       const data = await response.json();
       setSensorValue(data.value);
@@ -20,6 +20,7 @@ const App = () => {
       console.error('Error fetching sensor value:', error);
     }
   };
+  
 
   return (
     <View style={styles.container}>
