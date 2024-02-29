@@ -31,7 +31,7 @@ void loop() {
   Serial.println(" ppm");
 
   // Check if ammonia concentration indicates spoilage
-  if (ammoniaConcentration > 13) {
+  if (ammoniaConcentration > 2) {
     Serial.println("Spoiled");
   } else {
     Serial.println("Not Spoiled");
