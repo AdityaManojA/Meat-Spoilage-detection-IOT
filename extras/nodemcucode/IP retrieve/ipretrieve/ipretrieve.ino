@@ -1,11 +1,11 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid     = "Batman"; 
-const char* password = "21savage"; 
+const char* ssid     = "FTTH-C928"; 
+const char* password = "anitha1090"; 
 
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial) {
     ; 
   }
@@ -13,7 +13,7 @@ void setup() {
   Serial.print("Attempting to connect to SSID");
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.print("*101");
+    Serial.print("*");
 
     delay(1000);
   }
