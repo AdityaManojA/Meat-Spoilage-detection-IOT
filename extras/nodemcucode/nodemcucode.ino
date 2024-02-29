@@ -2,7 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
-#define BLYNK_AUTH_TOKEN "-8l1w5zDMHj-ZP7nL8RkSwN9wWWHlF8b"
+#define BLYNK_AUTH_TOKEN "ZM4a4NWN-gZQ5Amu4skk8qwhx8CGsQzH"
 
 char auth[] = BLYNK_AUTH_TOKEN;
 char ssid[] = "Batman";
