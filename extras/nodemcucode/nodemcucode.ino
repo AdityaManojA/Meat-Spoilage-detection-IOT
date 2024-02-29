@@ -1,28 +1,22 @@
+#define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
 
-const char* ssid     = "FTTH-C928"; 
-const char* password = "anitha1090"; 
+#define BLYNK_AUTH_TOKEN "-8l1w5zDMHj-ZP7nL8RkSwN9wWWHlF8b"
 
+char auth[] = BLYNK_AUTH_TOKEN;
+char ssid[] = "Batman";
+char pass[] = "21savage";
+
+BLYNK_WRITE(V0) {
+  digitalWrite(D0, param.asInt());
+}
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial) {
-    ; 
-  }
-
-  Serial.print("Attempting to connect to SSID");
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-
-    delay(1000);
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());  
+  pinMode(D0, OUTPUT);
+  Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
 }
 
 void loop() {
+  Blynk.run();
 }
