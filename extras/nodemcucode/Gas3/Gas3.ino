@@ -6,11 +6,12 @@
 #define RO_CLEAN_AIR_FACTOR 9.83 // Clean air resistance factor
 #define GAS_AMMONIA 0 // Ammonia gas
 
-const char* serverName = "192.168.1.11"; // IP address or hostname of your server
+
 const int serverPort = 80; // HTTP server port, typically 80
 const char* serverPath = "/sensordata/post-esp-data.php"; // Path to your PHP script
 const char* ssid = "FTTH-C928";
 const char* password = "anitha1090";
+const char* serverName = "192.168.202.218"; // Correct IP address
 String apiKeyValue = "tPmAT5Ab3j7F9";
 String sensorName = "MQ137"; // Name of your sensor, adjust accordingly
 
@@ -75,12 +76,11 @@ void loop() {
     // Prepare the complete URL
     String url = "http://" + String(serverName) + ":" + String(serverPort) + serverPath;
 
-    // Begin HTTP request
     http.begin(client, url);
-
+    
     // Specify content-type header
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
+    
     // Prepare your HTTP POST request data
     String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName + "&value1=" + String(ammoniaConcentration) + "&Sstatus=" + spoiledStatus;
     Serial.print("httpRequestData: ");
@@ -102,5 +102,5 @@ void loop() {
     Serial.println("WiFi Disconnected");
   }
 
-  delay(5000);
+  delay(1000);
 }
