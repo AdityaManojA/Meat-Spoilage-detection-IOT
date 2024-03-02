@@ -49,8 +49,8 @@ void loop() {
   float RS_gas = (5.0 - sensorVoltage) / sensorVoltage * RL_VALUE; // Calculate RS in kilo ohms
 
   float ratio = RS_gas / Ro;
-  float ammoniaConcentration = pow(10, ((log10(ratio) - 0.2042) / (-0.3268))); // Calculate ammonia concentration
-
+ // Calculate ammonia concentration
+  float ammoniaConcentration = pow(10, ((log10(ratio) - 0.2042) / (-0.3268)));
   Serial.print("Sensor Value: ");
   Serial.print(sensorValue);
   Serial.print(", Voltage: ");
@@ -61,7 +61,7 @@ void loop() {
 
   // Determine if spoiled
   String spoiledStatus;
-  if (ammoniaConcentration > 3) { // Adjust threshold accordingly
+  if (ammoniaConcentration > 0.1) { // Adjust threshold accordingly
     Serial.println("Spoiled");
     spoiledStatus = "Spoiled";
   } else {
