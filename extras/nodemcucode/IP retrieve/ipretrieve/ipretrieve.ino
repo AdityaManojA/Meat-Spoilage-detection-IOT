@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid     = "FTTH-C928"; 
-const char* password = "anitha1090"; 
+char ssid[] = "Wifi address";
+char pass[] = "wifi pass";
 
 
 void setup() {

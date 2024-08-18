@@ -1,1 +1,2 @@
+this site helped me a lot on this project
 https://mytectutor.com/how-to-connect-esp8266-to-mysql-database-using-php-and-arduino-ide/

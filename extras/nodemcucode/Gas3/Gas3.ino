@@ -9,8 +9,8 @@
 
 const int serverPort = 80; // HTTP server port, typically 80
 const char* serverPath = "/sensordata/post-esp-data.php"; // Path to your PHP script
-const char* ssid = "FTTH-C928";
-const char* password = "anitha1090";
+const char* ssid = "wifi address"; 
+const char* password = "Wifi Password";
 const char* serverName = "192.168.202.218"; // Correct IP address
 String apiKeyValue = "tPmAT5Ab3j7F9";
 String sensorName = "MQ137"; // Name of your sensor, adjust accordingly

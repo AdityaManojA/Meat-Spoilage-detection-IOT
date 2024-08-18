@@ -4,8 +4,8 @@
 #define BLYNK_PRINT Serial
 
 char auth[] = "ZM4a4NWN-gZQ5Amu4skk8qwhx8CGsQzH";
-char ssid[] = "Batman";
-char pass[] = "21savage";
+char ssid[] = "Wifi address";
+char pass[] = "wifi pass";
 
 // Define sensor and calibration parameters
 #define RL_VALUE 10.0 // Load resistance on the board, in kilo ohms
