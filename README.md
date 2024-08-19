@@ -1,7 +1,3 @@
-Here's an updated version of your README file that incorporates the additional details from the code:
-
----
-
 # Meat Spoilage Detection System
 
 ## Project Overview
@@ -121,8 +117,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For any inquiries, please contact Aditya Manoj at [your.email@example.com](mailto:adityamanoja@gmail.com).
+For any inquiries, please contact Aditya Manoj at [adityamanoja@gmail.com](mailto:adityamanoja@gmail.com).
 
----
-
-Feel free to adjust any details or sections as needed!
