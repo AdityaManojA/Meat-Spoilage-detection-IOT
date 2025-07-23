@@ -1,120 +1,153 @@
-# Meat Spoilage Detection System
+# ServeGuard: Food Spoilage Sensing Module 🥩📡
 
-## Project Overview
+[![Paper Link](https://img.shields.io/badge/Read%20Our%20Paper%20on-Academia.edu-blue)](https://www.academia.edu/143035003/ServeGuard_Food_Spoilage_Sensing_Module)
 
-This project aims to develop a **Meat Spoilage Detection System** that accurately estimates the spoilage level of chicken samples. The system leverages pH and ammonia values to analyze the spoilage factor. Notably, the detection is contactless, with the system designed to read ammonia values emitted into the air from the meat sample.
+> 📄 **[Click here to access our full research paper](https://www.academia.edu/143035003/ServeGuard_Food_Spoilage_Sensing_Module)**  
+> Published as part of the KSCSTE TECHFEST 2024 proceedings, Volume 14, Issue 07, July 2025 (IJERT submission).
 
-## Features
+---
 
-- **No-Contact Detection**: Utilizes air-sensing technology to detect ammonia levels without direct contact with the meat sample.
-- **Dual Parameter Analysis**: Employs both pH and ammonia measurements to assess the spoilage level.
-- **Real-Time Monitoring**: Capable of providing real-time spoilage data for better decision-making in food safety.
-- **Wi-Fi Connectivity**: The system uses the ESP8266 module to send sensor data to a remote server via Wi-Fi.
-- **PHP Backend Integration**: The data is sent to a server running a PHP script, which can store and process the information for further analysis.
+## 🧠 Project Overview
 
-## Installation
+**ServeGuard** is a real-time meat spoilage detection system that leverages **IoT sensors** and **airborne gas analysis** to assess the freshness of chicken. Using an **MQ137 ammonia gas sensor** and a **pH sensor**, the system provides early warnings of spoilage without physical contact. This project was developed as part of our academic research initiative to combat foodborne illness through tech-enabled food safety.
 
-### Hardware Requirements
+---
 
-- ESP8266 Wi-Fi Module
+## 🎯 Key Features
+
+- 🔬 **Contactless Detection**: Measures airborne ammonia without physical contact with the meat.
+- 📈 **Dual Sensor Analysis**: Combines pH level and gas concentration for reliable spoilage estimation.
+- 🌐 **Wi-Fi Enabled**: Uses ESP8266 for seamless data transmission to a server.
+- 📲 **PHP-MySQL Backend Integration**: Real-time data logging and analysis via web infrastructure.
+- 🔁 **Continuous Monitoring**: Real-time updates make it suitable for food storage units, supermarkets, and supply chains.
+- 📊 **Backed by Research**: Full paper with methodology, results, and future scope is [available here](https://www.academia.edu/143035003/ServeGuard_Food_Spoilage_Sensing_Module).
+
+---
+
+## ⚙️ Hardware Requirements
+
+- ESP8266 (NodeMCU)
 - MQ137 Ammonia Gas Sensor
-- Analog pin for gas sensor connection
+- pH Sensor (optional for advanced detection)
+- Jumper wires, Breadboard
+- Power source (5V)
 
-### Software Requirements
+---
 
-- Arduino IDE with ESP8266 Board Support
-- A server with PHP installed
-- A database (MySQL recommended)
+## 💻 Software Requirements
 
-### Setting Up the Project
+- Arduino IDE (with ESP8266 board support)
+- Local or cloud-based LAMP stack (Linux, Apache, MySQL, PHP)
+- PHP script: `post-esp-data.php`
+- Optional: Python script for serial monitoring
 
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/username/meat-spoilage-detection.git
-    cd meat-spoilage-detection
-    ```
+---
 
-2. **Install required dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+## 🚀 Installation & Setup
 
-3. **Configure the PHP script**:
-   - Place the `post-esp-data.php` script in your server’s root directory.
-   - Ensure your server's IP address and port number are correctly set in the code.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/username/meat-spoilage-detection.git
+cd meat-spoilage-detection
+```
 
-4. **Flash the ESP8266**:
-   - Open the Arduino IDE.
-   - Load the `main.ino` file from the repository.
-   - Ensure the Wi-Fi credentials and server details are correctly entered.
-   - Flash the code onto the ESP8266.
+### 2. Configure the Server
+- Copy `post-esp-data.php` to your PHP server root directory.
+- Setup a MySQL database to log the incoming data.
 
-5. **Run the system**:
-    ```bash
-    python main.py
-    ```
+### 3. Flash the ESP8266
+- Open `main.ino` in Arduino IDE.
+- Enter your Wi-Fi credentials and server details.
+- Upload to ESP8266.
 
-## How It Works
+### 4. Start the System
+```bash
+python main.py  # (Optional Python monitor script)
+```
 
-1. **Ammonia Detection**: The system uses an MQ137 sensor to detect ammonia levels in the air around the chicken sample. Ammonia is a key indicator of meat spoilage.
+---
 
-2. **Wi-Fi Communication**: The ESP8266 connects to a Wi-Fi network using the provided SSID and password. It sends sensor data to a PHP script hosted on a server.
+## 🔍 How It Works
 
-3. **pH Analysis**: Alongside ammonia readings, the pH value is also considered for more accurate spoilage detection.
+### 🧪 Ammonia Gas Detection
+The MQ137 sensor reads airborne ammonia released from decomposing meat.
 
-4. **Spoilage Estimation**: The system calculates the ammonia concentration and determines if the meat is spoiled based on a predefined threshold.
+### 📡 Wireless Communication
+ESP8266 transmits sensor readings to a PHP script over Wi-Fi.
 
-5. **Data Logging**: The sensor data, including ammonia concentration and spoilage status, is sent via HTTP POST to a server-side PHP script, which can log the data into a database for further analysis.
+### ⚙️ Spoilage Logic
+Spoilage is flagged based on predefined thresholds from empirical data collected during testing.
 
-## Code Explanation
+### 🧾 Data Logging
+Sensor data and spoilage status are logged into a MySQL database for review and visualization.
 
-### Main Code Components
+---
 
-- **Wi-Fi Setup**: 
-   ```cpp
-   WiFi.begin(ssid, password);
-   while (WiFi.status() != WL_CONNECTED) {
-       Serial.print("*");
-       delay(1000);
-   }
-   ```
-   Connects the ESP8266 to the specified Wi-Fi network.
+## 📚 Code Overview
 
-- **Ammonia Concentration Calculation**: 
-   ```cpp
-   float RS_gas = (5.0 - sensorVoltage) / sensorVoltage * RL_VALUE;
-   float ratio = RS_gas / Ro;
-   float ammoniaConcentration = pow(10, ((log10(ratio) - 0.2042) / (-0.3268)));
-   ```
-   This calculates the ammonia concentration in parts per million (ppm) using the sensor's analog output.
+### Wi-Fi Initialization
+```cpp
+WiFi.begin(ssid, password);
+while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+}
+```
 
-- **HTTP POST Request**:
-   ```cpp
-   String url = "http://" + String(serverName) + ":" + String(serverPort) + serverPath;
-   http.begin(client, url);
-   String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName + "&value1=" + String(ammoniaConcentration) + "&Sstatus=" + spoiledStatus;
-   int httpResponseCode = http.POST(httpRequestData);
-   ```
-   Sends the sensor data to the server using a POST request to the specified PHP script.
+### Ammonia Calculation
+```cpp
+float RS_gas = (5.0 - sensorVoltage) / sensorVoltage * RL_VALUE;
+float ratio = RS_gas / Ro;
+float ammoniaConcentration = pow(10, ((log10(ratio) - 0.2042) / (-0.3268)));
+```
 
-### PHP Backend
+### Data Transmission
+```cpp
+String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName + "&value1=" + String(ammoniaConcentration) + "&Sstatus=" + spoiledStatus;
+int httpResponseCode = http.POST(httpRequestData);
+```
 
-The PHP script (`post-esp-data.php`) receives the sensor data and can store it in a database for further analysis. Make sure to configure your PHP server to handle the incoming data and store it securely.
+---
 
-## Usage
+## 🧪 Research Backing
 
-1. **Prepare the Sensor**: Ensure the MQ137 sensor is properly connected and calibrated.
-2. **Start the System**: Power on the ESP8266 and monitor the serial output for connection status and sensor readings.
-3. **View Results**: Data is sent to the server where it can be accessed and analyzed.
+This project was conceptualized and developed as part of a research paper titled:
 
-## Contributing
+### 📘 *ServeGuard: Food Spoilage Sensing Module*
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+> Published: KSCSTE TECHFEST 2024  
+> Submitted to: IJERT, Volume 14, Issue 07, July 2025  
+> Authors: Aditya Manoj, Melvin Davis, Palakulam Alita Antony, Vishnudath M, Aswathy Wilson  
 
-## License
+📎 **[Read the full paper on Academia.edu →](https://www.academia.edu/143035003/ServeGuard_Food_Spoilage_Sensing_Module)**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
 
-## Contact
+## 🧑‍🔬 Future Scope
 
-For any inquiries, please contact Aditya Manoj at [adityamanoja@gmail.com](mailto:adityamanoja@gmail.com).
+- Integrate **machine learning** for spoilage prediction models
+- Expand to other meats and perishable foods
+- Deploy cloud dashboards for supply chain integration
+- Include temperature & humidity sensors for greater accuracy
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For significant changes, open an issue first to discuss what you'd like to change.
+
+---
+
+## 📄 License
+
+Licensed under the [MIT License](LICENSE).
+
+---
+
+## 📬 Contact
+
+📧 Aditya Manoj – [adityamanoja@gmail.com](mailto:adityamanoja@gmail.com)  
+GitHub: [@AdityaManojA](https://github.com/AdityaManojA)
+
+---
+
+> 🚨 **Ensure food safety using smart tech – one sensor at a time.**
